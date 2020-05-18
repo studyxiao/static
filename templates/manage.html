@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>文件管理</title>
+</head>
+
+<body>
+  <form action="/upload" enctype="multipart/form-data" method="POST" onsubmit="return upload()">
+    <input id="name" type="text" name="name" placeholder="文件访问路径名称">
+    <input type="file" name="file" id="file">
+    <input type="submit" value="上传文件">
+  </form>
+  <div>
+    <ul>
+      {% for item in filenames %}
+      <li>{{item.name}}-{{item.path}}</li>
+
+      {% endfor %}
+    </ul>
+  </div>
+  <script crossorigin="anonymous" integrity="sha384-LVoNJ6yst/aLxKvxwp6s2GAabqPczfWh6xzm38S/YtjUyZ+3aTKOnD/OJVGYLZDl"
+    src="https://lib.baomitu.com/jquery/3.5.0/jquery.min.js"></script>
+  <script>
+    function upload() {
+      var formdata = new FormData()
+      var uploadElement = document.getElementById('file')
+      var nameElement = document.getElementById('name')
+      var file = uploadElement.files[0]
+      var name = nameElement.value
+      if (file) {
+        formdata.append('file', file)
+        formdata.append('name', name)
+        $.post('/upload', formdata)
+      }
+      return false
+    }
+  </script>
+</body>
+
+</html>
